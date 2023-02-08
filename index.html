@@ -7,57 +7,65 @@
     <title>Rock - Paper - Scissors</title>
 </head>
 <body>
-    <script>
-        function getComputerChoice() {
-            const choices = ["ROCK", "PAPER", "SCISSORS"];
-            return choices[Math.floor(Math.random() * choices.length)];
-        };
-        
-        function playRound(playerSelection, ComputerSelection) {
-            if (playerSelection === ComputerSelection) {
-                return "It is a tie!";
-            }
-            else if (
-                (playerSelection === "ROCK" && ComputerSelection === "SCISSORS") ||
-                (playerSelection === "SCISSORS" && ComputerSelection === "PAPER") ||
-                (playerSelection === "PAPER" && ComputerSelection === "ROCK")) {
-                    return "You Win! " + playerSelection + " beats " + ComputerSelection;
-            }
-            else {
-                return "You Lose! " + ComputerSelection + " beats " + playerSelection;
-            }
-        }
-
-        function game() {
-            let playerScore = 0;
-            let computerScore = 0;
-            for (let i = 0; i < 5; i++){
-                let playerSelection = prompt("Rock, Paper, Scissors?");
-                playerSelection = playerSelection.toUpperCase();
-                const ComputerSelection = getComputerChoice();
-                const result = playRound(playerSelection, ComputerSelection);
-                console.log(result);
-                if (result.startsWith("You Win")) {
-                    playerScore++;
-                }
-                else if (result.startsWith("You Lose")) {
-                    computerScore++;
-                }
-                else {
-                    playerScore++;
-                    computerScore++;
-                }
-            }
-            if (playerScore > computerScore) {
-                console.log("You WON! Final Score: " + playerScore + "-" + computerScore);
-            }
-            else if (playerScore < computerScore) {
-                console.log("You LOST! Final Score: " + playerScore + "-" + computerScore);
-            }
-            else {
-                console.log("Game TIED! Final Score: " + playerScore + "-" + computerScore);
-            }
-        }
-    </script>
+    <button id="rock">Rock</button>
+    <button id="paper">Paper</button>
+    <button id="scissors">Scissor</button>
+    <div id="results"></div>
 </body>
+<script>
+    function getComputerChoice() {
+    const choices = ["ROCK", "PAPER", "SCISSORS"];
+    return choices[Math.floor(Math.random() * choices.length)];
+};
+
+function playRound(playerSelection) {
+
+    if (playerScore === 5) {
+        return "YAY! YOU WIN THE FACE OFF!";
+    }
+    
+    else if (computerScore === 5) {
+        return "BOO! COMPUTER WINS THE FACE OFF!"
+    }
+
+    const ComputerSelection = getComputerChoice();
+
+    if (playerSelection === ComputerSelection) {
+        return "It is a tie!";
+    }
+    else if (
+        (playerSelection === "ROCK" && ComputerSelection === "SCISSORS") ||
+        (playerSelection === "SCISSORS" && ComputerSelection === "PAPER") ||
+        (playerSelection === "PAPER" && ComputerSelection === "ROCK")) {
+            playerScore++;
+            return "You Win! " + playerSelection + " beats " + ComputerSelection;
+    }
+    else {
+        computerScore++;
+        return "You Lose! " + ComputerSelection + " beats " + playerSelection;
+    }
+}
+
+const rockButton = document.querySelector('#rock');
+const paperButton = document.querySelector('#paper');
+const scissorsButton = document.querySelector('#scissors');
+const resultsDiv = document.querySelector('#results');
+let playerScore = 0;
+let computerScore = 0;
+
+rockButton.addEventListener('click', function() {
+    let result = playRound('ROCK');
+    resultsDiv.innerHTML = result;
+});
+
+paperButton.addEventListener('click', function() {
+    let result = playRound('PAPER');
+    resultsDiv.innerHTML = result;
+});
+
+scissorsButton.addEventListener('click', function() {
+    let result = playRound('SCISSORS');
+    resultsDiv.innerHTML = result;
+});
+</script>
 </html>
